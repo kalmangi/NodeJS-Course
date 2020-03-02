@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+      <div class="main-content">
+        {{>header}}
+        <p>This site was created by Andrew Mead. It uses data from mapbox.com and darksky.net!</p>
+        {{!-- <img class="portrait" src="/img/me.png"> --}}
+         <form>
+            <input placeholder="location"/> 
+            <button>Search</button>
+        </form>
+        <p id="msg-1"></p>
+     </div>
+        {{>footer}}
+        <script src="../public/js/app.js"></script>
+    </body>
+</html> 
