@@ -1,13 +1,16 @@
-const express = require('express')
-require("./db/mongoose")
-const User = require('./models/user')
-const Task = require('./models/task')
-const auth = require('../src/middleware/auth')
+const app = require('./app')
+// const express = require('express')
+// require("./db/mongoose")
+// const User = require('./models/user')
+// const Task = require('./models/task')
+//
+//const auth = require('../src/middleware/auth')
 //const router = new express.Router()
-const userRouter = require("./routes/user")
-const taskRouter = require("./routes/task")
-const app = express()
-const port = process.env.PORT || 3002
+// const userRouter = require("./routes/user")
+// const taskRouter = require("./routes/task")
+
+// const app = express()
+const port = process.env.PORT || 3002 
 
 // const multer = require('multer')
 
@@ -60,53 +63,54 @@ const port = process.env.PORT || 3002
 //     res.status(400).send({error: error.message})
 // })
 
-app.use((req, res, next)=>{
+// app.use((req, res, next)=>{
   
-    // if(req.method === 'GET'){
-    //     res.send('Get req are disabled')
-    // }else{
-    //     next()
-    // }
-    console.log(req.method, req.path)
-     next()//This is called so as to run the route handler
-});//This is middleware function. It can validate if user exists in db.
+//     // if(req.method === 'GET'){
+//     //     res.send('Get req are disabled')
+//     // }else{
+//     //     next()
+//     // }
+//     console.log(req.method, req.path)
+//      next()//This is called so as to run the route handler
+// });//This is middleware function. It can validate if user exists in db.
 
 // app.use((req, res, next)=>{
 //     res.status(503).send('site is currently down')
 // })
 
-app.use(express.json())
-app.use(userRouter)
-app.use(taskRouter)
+// app.use(express.json())
+// app.use(userRouter)
+// app.use(taskRouter)
 
 //start application
-app.get('/', (req, res) => {
-    return res.json({
-        message: 'Welcome to task api!!!'
-    })
-})
+// app.get('/', (req, res) => {
+//     return res.json({
+//         message: 'Welcome to task api!!!'
+//     })
+// })
 
 
-const bcrypt = require('bcrypt')
-const myfunc = async () =>{
-    const password = "abcd"
-    const hashPass = await bcrypt.hash(password, 8)
-    console.log(hashPass)
-    console.log(password)
-}
-myfunc()
+// const bcrypt = require('bcrypt')
+// const myfunc = async () =>{
+//     const password = "abcd"
+//     const hashPass = await bcrypt.hash(password, 8)
+//     console.log(hashPass)
+//     console.log(password)
+// }
+// myfunc()
 
-var jwt = require('jsonwebtoken');
+// var jwt = require('jsonwebtoken');
 
-const myfunction = async () => {
-    const mytoken = jwt.sign({_id:'abch123'},'firstcourse', {expiresIn:'6 days'})
-    console.log(mytoken)
+// const myfunction = async () => {
+//     const mytoken = jwt.sign({_id:'abch123'},'firstcourse', {expiresIn:'6 days'})
+//     console.log(mytoken)
 
-    const data = jwt.verify(mytoken, 'firstcourse')
-    console.log('dddaataa',data)
-}
+//     const data = jwt.verify(mytoken, 'firstcourse')
+//     console.log('dddaataa',data)
 
-myfunction()
+// }
+
+// myfunction()
 
 //Without middleware: whenever there is new request :- run route handler
 

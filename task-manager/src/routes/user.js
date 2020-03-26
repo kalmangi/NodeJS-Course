@@ -2,6 +2,7 @@ const express = require('express')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const multer = require('multer')
+const sharp = require('sharp')
 const router = new express.Router()
 const bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken');
@@ -92,10 +93,13 @@ router.post('/upload', upload.single('upload'), auth, async (req, res)=>{
 })//This func is designed to handle errors
 
 
-router.delete('/users/me/avatar',auth, upload.single('avatar'), async (res,req)=>{
-    req.user.avatar = undefined
-    await req.user.save()   
-    res.status(200).send('avatar deleted')
+router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
+    const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+    req.user.avatar = buffer
+    await req.user.save()
+    res.send()
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
 })
 
 //using async/await
@@ -245,7 +249,15 @@ router.patch('/users/me', auth, async (req,res)=>{
     }
 });
 
-
+router.delete('/users/me', auth, async (req, res) => {
+    try {
+        await req.user.remove()
+        sendCancelationEmail(req.user.email, req.user.name)
+        res.send(req.user)
+    } catch (e) {
+        res.status(500).send()
+    }
+})
 
 router.delete('/users/:id',async (req,res)=>{
     //Using async/await
